@@ -52,7 +52,7 @@ void get_annulus_grid(double outer_d1,
     nsf[bb[0]]=nsf[bb[0]+1];
   }
   /* perform 2-D triangulation using ugrid */
-  
+  printf("--------------- generating 2d grid ----------\n");
   generate_grid_(xb,yb,nsf,bb,&nbnodes,&ndom);
   get_elem_count_(&nnodes2d,&ntri2d);
   x2d=(double *)malloc(sizeof(double)*nnodes2d*2);
@@ -61,7 +61,7 @@ void get_annulus_grid(double outer_d1,
   //for(i=0;i<nbnodes;i++) { x2d[2*i]=xb[i];x2d[2*i+1]=yb[i];}
 
   /* create prismatic mesh by extruding the annulus */
-  
+  printf("------------- extruding prizms ----------\n"); 
   nh=outer_h1/outer_dx;
   dh=outer_h1/nh;
 
@@ -101,6 +101,7 @@ void get_annulus_grid(double outer_d1,
 	  offset+=nnodes2d;
 	}
     }
+  printf("------------ done ---------------------\n");
 
     
   free(x2d);

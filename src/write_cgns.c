@@ -16,7 +16,7 @@ void write_cgns(char *fname,int gridcount,...)
   va_list gridlist;
   GRID *g;
 
-
+  printf("Writing multi-zone cgns file \n");
   sprintf(basename, "Base");
   if (cg_open(fname,CG_MODE_WRITE,&index_file)) cg_error_exit();
   if (cg_base_write(index_file, basename, 3,3, &index_base)) cg_error_exit();
@@ -100,4 +100,5 @@ void write_cgns(char *fname,int gridcount,...)
     } 
     va_end(gridlist);
     if(cg_close(index_file)) cg_error_exit();     
+    printf("Done..\n");
 }

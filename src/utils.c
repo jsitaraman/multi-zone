@@ -21,7 +21,7 @@ void merge_grids(GRID *g1, GRID *g2)
   int i,j,k,*fmap,*itag;
   long *vtmp;
   double *xtmp,a[3],b[3],c[3],n[3];
-  
+  printf("Merging grids..\n"); 
   xtmp=(double *)malloc(sizeof(double)*g1->nnodes*3);
   vtmp=(long *)malloc(sizeof(long)*g1->ncells[0]*6);
   
@@ -57,7 +57,7 @@ void merge_grids(GRID *g1, GRID *g2)
       fmap[i]=j;
       j++;
     }
-  printf("%d %d\n",g1->nnodes,j);
+  printf("Number of nodes before and after merge (%d %d)\n",g1->nnodes,j);
   g1->nnodes=j;
 
   for(i=0;i<6*g1->ncells[0];i++) g1->vconn[i]=fmap[itag[g1->vconn[i]]];
