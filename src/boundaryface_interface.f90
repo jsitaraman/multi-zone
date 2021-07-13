@@ -70,9 +70,11 @@ contains
     integer :: flocal(4)
     integer, allocatable :: face(:,:),ipointer(:),iflag_cell(:)
     integer, parameter :: base=1
+    real*8 :: t1,t2
     !
     ! find all exposed cell faces
     !
+    call cpu_time(t1)
     allocate(iflag_cell(ntetra+npyra+nprizm+nhexa))
     !
     maxfaces=0
@@ -259,6 +261,9 @@ contains
     deallocate(face)
     deallocate(ipointer)
     deallocate(iflag_cell)
+    call cpu_time(t2)
+    !
+    write(6,*) 'Face calculation time :',t2-t1
     !
     return
   end subroutine findnewboundaryface

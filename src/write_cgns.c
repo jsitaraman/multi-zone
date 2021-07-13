@@ -72,7 +72,7 @@ void write_cgns(char *fname,int gridcount,...)
 	  elems_sofar=nelem_end;
 	  nelem_start=nelem_end+1;
 	  nelem_end=nelem_start+ntri-1;
-	  sprintf(sectionname,"TRI%d",p);
+	  sprintf(sectionname,"TRI%d_Zone%d",p,z);
 	  if (cg_section_write(index_file,index_base,index_zone,sectionname,TRI_3,
 			  nelem_start,nelem_end,nbdyelem,ielem,&index_section)) cg_error_exit();
 	}
@@ -88,7 +88,7 @@ void write_cgns(char *fname,int gridcount,...)
 	  elems_sofar=nelem_end;
 	  nelem_start=nelem_end+1;
 	  nelem_end=nelem_start+nquad-1;
-	  sprintf(sectionname,"QUAD%d",p);
+	  sprintf(sectionname,"QUAD%d_Zone%d",p,z);
 	  if (cg_section_write(index_file,index_base,index_zone,sectionname,QUAD_4,
 			  nelem_start,nelem_end,nbdyelem,ielem,&index_section)) cg_error_exit();
 	}
