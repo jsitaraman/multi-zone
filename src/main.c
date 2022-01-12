@@ -6,7 +6,7 @@ void main(int argc, char *argv[])
 {
   double outer_d1,outer_d2,outer_h1,outer_h2,outer_dx;
   double inner_d1,inner_h1,inner_dx;  
-  GRID gannulus,gcyl_top,gcyl_bottom,gcyl_inner;
+  GRID gannulus,gcyl_top,gcyl_bottom,gcyl_inner,gannulus2;
   double trans[3];
     
   parseInputs("input.mz",&outer_d1,&outer_d2,&outer_h1,&outer_h2,
@@ -36,4 +36,8 @@ void main(int argc, char *argv[])
   separate_patches(&gannulus,outer_d1,outer_d2,outer_h1,outer_h2);
   //writegridsurface_tecplot(&gcyl_inner,"exposed.dat");
   write_cgns("test.cgns",2,&gannulus,&gcyl_inner);
+  merge_grids(&gannulus,&gcyl_inner);
+  extract_faces(&gannulus);
+  separate_patches(&gannulus,outer_d1,outer_d2,outer_h1,outer_h2);
+  write_cgns("single.cgns",1,&gannulus);
 }
