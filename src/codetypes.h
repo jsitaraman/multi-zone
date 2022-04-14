@@ -25,6 +25,7 @@ void parseInputs(char *inputfile,
 		 double *inner_dx);
 void writegrid_tecplot(GRID *g, char *fname);
 void writegridsurface_tecplot(GRID *g, char *fname);
+void writegridsurface_ugrid(GRID *g, char *fname);
 void get_annulus_grid(double outer_d1,
 		      double outer_d2,
 		      double outer_h1,

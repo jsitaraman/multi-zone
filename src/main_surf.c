@@ -28,20 +28,16 @@ void main(int argc, char *argv[])
   writegrid_tecplot(&gcyl_top, "topcyl.dat");
   writegrid_tecplot(&gcyl_bottom,"bottomcyl.dat");
   */
-  extract_faces(&gannulus);
-  separate_patches(&gannulus,outer_d1,outer_d2,outer_h1,outer_h2);
-  writegridsurface_ugrid(&gannulus,"annulus.ugrid");
   merge_grids(&gannulus,&gcyl_top);
   merge_grids(&gannulus,&gcyl_bottom);
   //writegrid_tecplot(&gannulus,"merged.dat");
   extract_faces(&gannulus);
   extract_faces(&gcyl_inner);
   separate_patches(&gannulus,outer_d1,outer_d2,outer_h1,outer_h2);
-  writegridsurface_tecplot(&gcyl_inner,"exposed.dat");
+  //writegridsurface_tecplot(&gcyl_inner,"exposed.dat");
   write_cgns("test.cgns",2,&gannulus,&gcyl_inner);
   merge_grids(&gannulus,&gcyl_inner);
   extract_faces(&gannulus);
   separate_patches(&gannulus,outer_d1,outer_d2,outer_h1,outer_h2);
   write_cgns("single.cgns",1,&gannulus);
-  writegridsurface_ugrid(&gcyl_inner,"cyl.ugrid");
 }

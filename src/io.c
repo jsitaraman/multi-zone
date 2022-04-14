@@ -79,3 +79,62 @@ void writegridsurface_tecplot(GRID *g, char *fname)
   fclose(fp);
 
 }
+
+void writegridsurface_ugrid(GRID *g, char*fname)
+{
+  int i,j,m;
+  FILE *fp;
+ int *iflag;
+ iflag=(int *)malloc(sizeof(int)*g->nnodes);
+ for(i=0;i<g->nnodes;i++) iflag[i]=-1;
+ fp=fopen(fname,"w");
+ m=0;
+ for(i=0;i<g->ntri;i++) {
+   for(j=0;j<3;j++)  {
+     iflag[g->eface[m]]=1;
+     m++;
+   }
+ }
+ for(i=0;i<g->nquad;i++) {
+   for(j=0;j<4;j++)  {
+     iflag[g->eface[m]]=1;
+     m++;
+   }
+ }
+ m=0;
+ for(i=0;i<g->nnodes;i++) if (iflag[i] >0) iflag[i]=m++;
+ printf("%d %d %d\n",m,g->nnodes,g->npatch);
+ fprintf(fp,"%d %d %d %d %d %d %d\n",m,g->ntri+g->nquad*2,0,0,0,0,0);
+ for(i=0;i<g->nnodes;i++) {
+   if (iflag[i] > -1) {
+     fprintf(fp,"%lf %lf %lf\n",g->x[3*i],g->x[3*i+1],g->x[3*i+2]);
+   }
+ }
+ m=0;
+ for(i=0;i<g->ntri;i++)
+   {
+     fprintf(fp,"%ld %ld %ld\n",iflag[g->eface[m]]+1,
+	     iflag[g->eface[m+1]]+1,
+	     iflag[g->eface[m+2]]+1);
+     m+=3;
+   }
+  for(i=0;i<g->nquad;i++)
+   {
+     fprintf(fp,"%ld %ld %ld\n",iflag[g->eface[m]]+1,
+	     iflag[g->eface[m+1]]+1,
+	     iflag[g->eface[m+2]]+1);
+     fprintf(fp,"%ld %ld %ld\n",iflag[g->eface[m]]+1,
+	     iflag[g->eface[m+2]]+1,
+	     iflag[g->eface[m+3]]+1);
+     m+=4;
+   }
+  for(i=0;i<g->ntri;i++)
+   fprintf(fp,"%ld\n",g->patchid[i]+1);
+  for(i=0;i<g->nquad;i++) 
+  {
+   fprintf(fp,"%ld\n",g->patchid[i+g->ntri]+2);
+   fprintf(fp,"%ld\n",g->patchid[i+g->ntri]+2);
+  }
+  fclose(fp);
+
+}
